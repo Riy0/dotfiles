@@ -1,4 +1,4 @@
-DOT_FILES=(.bashrc .bash_profile .bash_aliases)
+DOT_FILES=(.zshrc .bash_profile )
 
  for file in ${DOT_FILES[@]}
  do

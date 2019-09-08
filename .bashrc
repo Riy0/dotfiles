@@ -1,8 +1,3 @@
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 set syntax on
 set number
 #character code
@@ -12,14 +7,10 @@ export LC_MESSAGES='ja_JP.UTF-8'
 
 
 # append to the history file, don't overwrite it
-shopt -s histappend
-
 HISTCONTROL=ignoredups:ignorespace
 HISTSIZE=1000
 HISTFILESIZE=2000
 export HISTIGNORE=clear:ls:history:exit
-
-shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -54,6 +45,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# java setting
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+
 #go settings
 #export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME
@@ -69,10 +63,18 @@ eval "$(pyenv virtualenv-init -)"
 eval "$(rbenv init -)"
 export PATH=$PATH:$HOME/.nodebrew/current/bin
 
-# java setting
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH=$PATH:/Users/riyo/.nodebrew/current/bin
+
+# rails setteing
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="$HOME/.rbenv/shims:$PATH"
+
+# for android studio
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
