@@ -1,165 +1,164 @@
-export PATH="/usr/local/bin:$PATH"
-fpath=(/usr/local/share/zsh-completions $fpath)
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/riyo/.oh-my-zsh"
+ 
+# oh-my-zshで利用できるテーマを指定
+ZSH_THEME="candy"
+ 
+# oh my zshで利用できるプラグインを指定
+plugins=(brew gem git rbenv vagrant)
+ 
+# User configuration
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH="PYENV_ROOT/ersions/anaconda3-5.0.1/bin/:$PATH"
 
-########################################
-# 環境変数
-export LANG=ja_JP.UTF-8
+NODEBREW_HOME="/usr/local/var/nodebrew/current"
+export NODEBREW_HOME
+export NODEBREW_ROOT="/usr/local/var/nodebrew"
 
-# 色を使用出来るようにする
-autoload -Uz colors
-colors
+export PATH=$PATH:$NODEBREW_HOME/bin
+export PATH=$PATH:/Users/riyo/.nodebrew/current/bin
+export PATH=$PATH:~/.npm-global/bin/
+export PATH=/usr/local/Cellar/postgresql/10.5/bin/:$PATH
 
-#keybind
-bindkey -v
-
-# ヒストリの設定
-HISTFILE=~/.zsh_history
-HISTSIZE=1000000
-SAVEHIST=1000000
-
-
-# 単語の区切り文字を指定する
-autoload -Uz select-word-style
-select-word-style default
-# ここで指定した文字は単語区切りとみなされる
-# / も区切りと扱うので、^W でディレクトリ１つ分を削除できる
-zstyle ':zle:*' word-chars " /=;@:{},|"
-zstyle ':zle:*' word-style unspecified
-
-########################################
-# compliment
-autoload -Uz compinit
-compinit
-
-# 補完で小文字でも大文字にマッチさせる
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-# ../ の後は今いるディレクトリを補完しない
-zstyle ':completion:*' ignore-parents parent pwd ..
-
-# sudo の後ろでコマンド名を補完する
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin \
-                   /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
-
-# ps コマンドのプロセス名補完
-zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
-
-
-########################################
-# vcs_info
-autoload -Uz vcs_info
-autoload -Uz add-zsh-hook
-
-zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
-zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
-
-function _update_vcs_info_msg() {
-    LANG=en_US.UTF-8 vcs_info
-    RPROMPT="${vcs_info_msg_0_}"
-}
-add-zsh-hook precmd _update_vcs_info_msg
-
-
-########################################
-# オプション
-setopt print_eight_bit
-
-# beep を無効にする
-setopt no_beep
-
-# フローコントロールを無効にする
-setopt no_flow_control
-
-# Ctrl+Dでzshを終了しない
-setopt ignore_eof
-
-# '#' 以降をコメントとして扱う
-setopt interactive_comments
-
-# ディレクトリ名だけでcdする
-setopt auto_cd
-
-# cd したら自動的にpushdする
-setopt auto_pushd
-# 重複したディレクトリを追加しない
-setopt pushd_ignore_dups
-
-# 同時に起動したzshの間でヒストリを共有する
-setopt share_history
-
-# 同じコマンドをヒストリに残さない
-setopt hist_ignore_all_dups
-
-# スペースから始まるコマンド行はヒストリに残さない
-setopt hist_ignore_space
-
-# ヒストリに保存するときに余分なスペースを削除する
-setopt hist_reduce_blanks
-
-# 高機能なワイルドカード展開を使用する
-setopt extended_glob
-
-########################################
-# キーバインド
-
-# ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
-bindkey '^R' history-incremental-pattern-search-backward
-
-########################################
-# エイリアス
-
-alias l='ls -a'
+export PATH="/Users/riyo/.rbenv/shims:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/sbin:$PATH"
+# export MANPATH="/usr/local/man:$MANPATH"
+ 
+source $ZSH/oh-my-zsh.sh
+ 
+# lang environment 
+export LANG=en_US.UTF-8
+ 
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+ 
+# Set personal aliases
+# For a full list of active aliases, run `alias`.
 alias la='ls -a'
+alias l='ls -a'
 alias ll='ls -l'
-
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+
 alias mkdir='mkdir -p'
-alias sudo='sudo '
+alias lc='colorls'
 
-function custom_cd()
-{
-  \cd $@ && clear && ls -a
+function chpwd() { ls -a }
+
+# 日本語ファイル名を表示可能にする
+setopt print_eight_bit
+ 
+# cdなしでディレクトリ移動
+setopt auto_cd
+ 
+# ビープ音の停止
+setopt no_beep
+ 
+# ビープ音の停止(補完時)
+setopt nolistbeep
+ 
+# cd -<tab>で以前移動したディレクトリを表示
+setopt auto_pushd
+ 
+# ヒストリ(履歴)を保存、数を増やす
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+ 
+# 同時に起動したzshの間でヒストリを共有する
+setopt share_history
+ 
+# 直前と同じコマンドの場合は履歴に追加しない
+setopt hist_ignore_dups
+ 
+# 同じコマンドをヒストリに残さない
+setopt hist_ignore_all_dups
+ 
+# スペースから始まるコマンド行はヒストリに残さない
+setopt hist_ignore_space
+ 
+# ヒストリに保存するときに余分なスペースを削除する
+setopt hist_reduce_blanks
+ 
+# keybind
+bindkey -v
+
+# zsh-completionsの設定
+fpath=(/path/to/homebrew/share/zsh-completions $fpath)
+ 
+autoload -U compinit
+compinit -u
+
+# ^r で*を使えるように
+bindkey '^R' history-incremental-pattern-search-backward
+
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:*' formats '[%F{green}%b%f]'
+zstyle ':vcs_info:*' actionformats '[%F{green}%b%f(%F{red}%a%f)]'
+precmd() { vcs_info }
+
+# fzf
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+
+# fbr - checkout git branch
+fbr() {
+   local branches branch
+   branches=$(git branch -vv) &&
+   branch=$(echo "$branches" | fzf +m) &&
+   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
-alias cd='custom_cd'
 
-# グローバルエイリアス
-alias -g L='| less'
-alias -g G='| grep'
+# fbr - checkout git branch (including remote branches)
+fbrm() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
 
-# C で標準出力をクリップボードにコピーする
-# mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
-if which pbcopy >/dev/null 2>&1 ; then
-    # Mac
-    alias -g C='| pbcopy'
-elif which xsel >/dev/null 2>&1 ; then
-    # Linux
-    alias -g C='| xsel --input --clipboard'
-elif which putclip >/dev/null 2>&1 ; then
-    # Cygwin
-    alias -g C='| putclip'
-fi
+# fshow - git commit browser
+fshow() {
+  git log --graph --color=always \
+       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
 
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
 
-########################################
-# OS 別の設定
-case ${OSTYPE} in
-    darwin*)
-        #Mac用の設定
-        export CLICOLOR=1
-        alias ls='ls -G -F'
-        ;;
-esac
-
-# vim:set ft=zsh:
-
-export PATH="/usr/local/bin:$PATH"
-
-eval "$(starship init zsh)"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/riyo/gcp/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/riyo/gcp/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/riyo/gcp/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/riyo/gcp/google-cloud-sdk/completion.zsh.inc'; fi
+### Added by Zplugin's installer
+source '/Users/riyo/.zplugin/bin/zplugin.zsh'
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin installer's chunk
+zplugin light zsh-users/zsh-autosuggestions
+zplugin light zdharma/fast-syntax-highlighting
+zplugin load zdharma/history-search-multi-word
+zplugin ice pick"async.zsh" src"pure.zsh"
+zplugin light sindresorhus/pure
+zplugin ice from"gh-r" as"program"
+zplugin load junegunn/fzf-bin
+zplugin ice from"gh-r" as"program" mv"docker* -> docker-compose" bpick"*linux*"
+zplugin load docker/compose
+zplugin ice as"program" atclone"rm -f src/auto/config.cache; ./configure" \
+    atpull"%atclone" make pick"src/vim"
+zplugin light vim/vim
+zplugin ice as"program" pick"$ZPFX/bin/git-*" make"PREFIX=$ZPFX"
+zplugin light tj/git-extras
