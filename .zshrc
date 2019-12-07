@@ -22,6 +22,7 @@ export PATH=$PATH:/Users/riyo/.nodebrew/current/bin
 export PATH=$PATH:~/.npm-global/bin/
 export PATH=/usr/local/Cellar/postgresql/10.5/bin/:$PATH
 
+
 export PATH="/Users/riyo/.rbenv/shims:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="/usr/local/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -162,3 +163,16 @@ zplugin ice as"program" atclone"rm -f src/auto/config.cache; ./configure" \
 zplugin light vim/vim
 zplugin ice as"program" pick"$ZPFX/bin/git-*" make"PREFIX=$ZPFX"
 zplugin light tj/git-extras
+
+
+## peco-srcの定義
+bindkey '^]' peco-src
+function peco-src() {
+    local src=$(ghq list --full-path | peco --query "$LBUFFER")
+    if [-n "$src" ]; then
+        BUFFER="cd $src"
+        zle accept-line
+    fi
+    zle -R -c
+}
+zle -N peco-src
