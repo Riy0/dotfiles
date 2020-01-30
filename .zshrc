@@ -25,6 +25,8 @@ export PATH=/usr/local/Cellar/postgresql/10.5/bin/:$PATH
 
 export PATH="/Users/riyo/.rbenv/shims:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH="/usr/local/sbin:$PATH"
+
+export PATH="$PATH:$HOME/development/flutter/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
  
 source $ZSH/oh-my-zsh.sh
@@ -65,7 +67,7 @@ setopt nolistbeep
 setopt auto_pushd
  
 # ヒストリ(履歴)を保存、数を増やす
-HISTFILE=~/.zsh_history
+HISTFILE=~/.cache/zsh/history
 HISTSIZE=100000
 SAVEHIST=100000
  
